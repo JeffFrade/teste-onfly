@@ -10,7 +10,7 @@ class UserObserver
 {
     public function created(User $user)
     {
-        $client = app(ClientRepository::class)->createPasswordGrantClient($user->id, 'J3M', env('APP_URL'),'users');
+        $client = app(ClientRepository::class)->createPasswordGrantClient($user->id, 'Onfly', env('APP_URL'),'users');
         $this->addClient($user->id, $client->id, $client->plainSecret);
     }
 

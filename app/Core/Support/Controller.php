@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Core\Support;
 
 use App\Core\Support\Traits\JsonResponse;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
