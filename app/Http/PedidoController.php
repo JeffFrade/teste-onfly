@@ -33,6 +33,17 @@ class PedidoController extends Controller
         }
     }
 
+    public function edit(int $id)
+    {
+        try {
+            $pedido = $this->pedidoService->edit($id);
+
+            return $this->sendJsonSuccessResponse('Dados do pedido encontrados!', $pedido);
+        } catch (PedidoNotFoundException $e) {
+            return $this->sendJsonErrorResponse($e);
+        }
+    }
+
     public function delete(int $id)
     {
         try {
