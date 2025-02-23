@@ -1,0 +1,65 @@
+services:
+  php-fpm:
+    build: ./docker/php
+    image: jefffrade/teste-onfly:php-fpm
+    restart: on-failure
+    container_name: jefffrade-teste-onfly-php-fpm
+    command: php-fpm
+    links:
+      - mysql
+    volumes:
+      - ./:/teste-onfly
+    networks:
+      - app
+      - db
+    healthcheck:
+      test: ['CMD', 'sh', '-c', 'netstat -an | fgrep 9000 | fgrep -q LISTEN']
+      interval: 10s
+      timeout: 5s
+      retries: 2
+
+  nginx:
+    build: ./docker/nginx
+    image: jefffrade/teste-onfly:nginx
+    restart: on-failure
+    container_name: jefffrade-teste-onfly-nginx
+    command: nginx -g "daemon off;"
+    links:
+      - php-fpm
+    ports:
+      - "${DOCKER_NGINX_PORT_HTTP}:80"
+    volumes:
+      - ./:/teste-onfly
+    networks:
+      - app
+    healthcheck:
+      test: ['CMD', 'sh', '-c', 'netstat -an | fgrep 80 | fgrep -q LISTEN']
+      interval: 10s
+      timeout: 5s
+      retries: 2
+
+  mysql:
+    build: ./docker/mysql
+    image: jefffrade/teste-onfly:mysql
+    restart: on-failure
+    container_name: jefffrade-teste-onfly-mysql
+    volumes:
+      - "${DOCKER_DATA_PATH}/mysql:/var/lib/mysql"
+    command:
+      - "--innodb_use_native_aio=0"
+    ports:
+      - "${DB_PORT}:3306"
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+    networks:
+      - db
+    healthcheck:
+      test: ['CMD', 'sh', '-c', 'netstat -an | fgrep 3306 | fgrep -q LISTEN']
+      interval: 10s
+      timeout: 5s
+      retries: 2
+
+networks:
+  app:
+  db:
