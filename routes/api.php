@@ -11,5 +11,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     Route::group(['prefix' => 'pedidos'], function () {
         Route::post('/store', [PedidoController::class, 'store'])->name('pedidos.store');
+        Route::delete('/delete/{id}', [PedidoController::class, 'delete'])->name('pedidos.delete');
     });
 });

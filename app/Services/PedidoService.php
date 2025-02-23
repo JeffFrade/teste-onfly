@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Events\PedidoStatusEvent;
 use App\Exceptions\InvalidDateException;
+use App\Exceptions\PedidoNotFoundException;
 use App\Helpers\DateHelper;
 use App\Repositories\PedidoRepository;
 use Carbon\Carbon;
@@ -31,6 +32,23 @@ class PedidoService
         event(new PedidoStatusEvent($pedido, $user));
 
         return $pedido;
+    }
+
+    public function edit(int $id)
+    {
+        $pedido = $this->pedidoRepository->findFirst('id', $id);
+
+        if (empty($pedido) || $pedido->id_user != Auth::user()->id) {
+            throw new PedidoNotFoundException('Pedido inexistente.', 404);
+        }
+
+        return $pedido;
+    }
+
+    public function delete(int $id)
+    {
+        $this->edit($id);
+        $this->pedidoRepository->delete($id);
     }
 
     private function validateStartDate(string $startDate)

@@ -3,6 +3,8 @@
 namespace App\Http;
 
 use App\Core\Support\Controller;
+use App\Exceptions\InvalidDateException;
+use App\Exceptions\PedidoNotFoundException;
 use App\Exceptions\StatusNotFoundException;
 use App\Services\PedidoService;
 use Illuminate\Http\Request;
@@ -23,7 +25,21 @@ class PedidoController extends Controller
             $pedido = $this->pedidoService->store($params);
 
             return $this->sendJsonSuccessResponse('Pedido cadastrado com sucesso!', $pedido);
-        } catch (StatusNotFoundException $e) {
+        } catch (
+            InvalidDateException |
+            StatusNotFoundException $e
+        ) {
+            return $this->sendJsonErrorResponse($e);
+        }
+    }
+
+    public function delete(int $id)
+    {
+        try {
+            $this->pedidoService->delete($id);
+
+            return $this->sendJsonSuccessResponse('Pedido excluído com sucesso!');
+        } catch (PedidoNotFoundException $e) {
             return $this->sendJsonErrorResponse($e);
         }
     }
