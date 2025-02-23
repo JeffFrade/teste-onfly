@@ -6,6 +6,7 @@ use App\Events\PedidoStatusEvent;
 use App\Mail\PedidoStatusMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class PedidoStatusListener implements ShouldQueue
@@ -28,5 +29,7 @@ class PedidoStatusListener implements ShouldQueue
         $mailable = new PedidoStatusMail($event->getPedido());
 
         Mail::to($event->getUser()->email)->queue($mailable);
+
+        Log::info('Pedido criado | Dados: ' . json_encode($event->getPedido()));
     }
 }

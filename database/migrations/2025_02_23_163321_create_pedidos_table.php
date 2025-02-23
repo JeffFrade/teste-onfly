@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('id_user')->unsigned();
             $table->string('destino');
-            $table->dateTime('data_ida');
-            $table->dateTime('data_volta');
+            $table->date('data_ida');
+            $table->date('data_volta');
             $table->bigInteger('id_status')->unsigned();
             $table->timestamps();
             $table->softDeletes();

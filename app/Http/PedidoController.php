@@ -3,7 +3,9 @@
 namespace App\Http;
 
 use App\Core\Support\Controller;
+use App\Exceptions\StatusNotFoundException;
 use App\Services\PedidoService;
+use Illuminate\Http\Request;
 
 class PedidoController extends Controller
 {
@@ -12,5 +14,30 @@ class PedidoController extends Controller
     public function __construct(PedidoService $pedidoService)
     {
         $this->pedidoService = $pedidoService;
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $params = $this->toValidate($request);
+            $pedido = $this->pedidoService->store($params);
+
+            return $this->sendJsonSuccessResponse('Pedido cadastrado com sucesso!', $pedido);
+        } catch (StatusNotFoundException $e) {
+            return $this->sendJsonErrorResponse($e);
+        }
+    }
+
+    protected function toValidate(Request $request)
+    {
+
+        $toValidateArr = [
+            'destino' => 'required|max:250',
+            'data_ida' => 'required|date',
+            'data_volta' => 'required|date',
+            'id_status' => 'nullable|numeric'
+        ];
+
+        return $this->validate($request, $toValidateArr);
     }
 }
