@@ -44,6 +44,22 @@ class PedidoController extends Controller
         }
     }
 
+    public function update(Request $request, int $id)
+    {
+        try {
+            $params = $this->toValidate($request);
+            $pedido = $this->pedidoService->update($params, $id);
+
+            return $this->sendJsonSuccessResponse('Pedido atualizado com sucesso!', $pedido);
+        } catch (
+            InvalidDateException |
+            PedidoNotFoundException |
+            StatusNotFoundException $e
+        ) {
+            return $this->sendJsonErrorResponse($e);
+        }
+    }
+
     public function delete(int $id)
     {
         try {

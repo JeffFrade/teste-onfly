@@ -26,7 +26,10 @@ class PedidoStatusListener implements ShouldQueue
      */
     public function handle(PedidoStatusEvent $event): void
     {
-        $mailable = new PedidoStatusMail($event->getPedido());
+        $mailable = new PedidoStatusMail(
+            $event->getPedido(),
+            $event->getStatus()
+        );
 
         Mail::to($event->getUser()->email)->queue($mailable);
 

@@ -26,6 +26,7 @@ class PedidoService
         $data['id_status'] = 1;
 
         $this->validateStartDate($data['data_ida']);
+        $this->validateEndDate($data['data_ida'], $data['data_volta']);
 
         $pedido = $this->pedidoRepository->create($data);
 
@@ -43,6 +44,25 @@ class PedidoService
         }
 
         return $pedido;
+    }
+
+    public function update(array $data, int $id)
+    {
+        $pedido = $this->edit($id);
+
+        $this->validateStartDate($data['data_ida']);
+        $this->validateEndDate($data['data_ida'], $data['data_volta']);
+
+        $this->pedidoRepository->update($data, $id);
+
+        if (
+            !empty($data['id_status'] ?? '') && 
+            ($pedido->id_status != $data['id_status'] ?? '')
+        ) {
+            event(new PedidoStatusEvent($pedido, Auth::user()));
+        }
+
+        return $this->edit($id);
     }
 
     public function delete(int $id)

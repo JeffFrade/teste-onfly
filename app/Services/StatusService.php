@@ -14,6 +14,17 @@ class StatusService
         $this->statusRepository = new StatusRepository();
     }
 
+    public function edit(int $id)
+    {
+        $status = $this->statusRepository->findFirst('id', $id);
+
+        if (empty($status)) {
+            throw new StatusNotFoundException('Status inexistente.', 404);
+        }
+
+        return $status;
+    }
+
     public function getAll()
     {
         $status = $this->statusRepository->allNoTrashed();
