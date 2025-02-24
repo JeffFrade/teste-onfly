@@ -18,6 +18,18 @@ class PedidoController extends Controller
         $this->pedidoService = $pedidoService;
     }
 
+    public function index(Request $request)
+    {
+        try {
+            $params = $request->all();
+            $pedidos = $this->pedidoService->index($params);
+
+            return $this->sendJsonSuccessResponse('Dados encontrados!', $pedidos);
+        } catch (PedidoNotFoundException $e) {
+            return $this->sendJsonErrorResponse($e);
+        }
+    }
+
     public function store(Request $request)
     {
         try {

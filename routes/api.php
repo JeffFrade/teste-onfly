@@ -10,6 +10,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     Route::group(['prefix' => 'pedidos'], function () {
+        Route::get('/', [PedidoController::class, 'index'])->name('pedidos.index');
         Route::post('/store', [PedidoController::class, 'store'])->name('pedidos.store');
         Route::get('/edit/{id}', [PedidoController::class, 'edit'])->name('pedidos.edit');
         Route::put('/update/{id}', [PedidoController::class, 'update'])->name('pedidos.update');

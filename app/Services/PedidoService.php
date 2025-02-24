@@ -19,6 +19,20 @@ class PedidoService
         $this->pedidoRepository = new PedidoRepository();
     }
 
+    public function index(array $data)
+    {
+        $idUser = Auth::user()->id;
+        $status = $data['status'] ?? null;
+
+        $pedidos = $this->pedidoRepository->index($idUser, $status);
+
+        if ($pedidos->isEmpty()) {
+            throw new PedidoNotFoundException('Não há pedidos para o usuário ou filtros informados.', 404);
+        }
+
+        return $pedidos;
+    }
+
     public function store(array $data)
     {
         $user = Auth::user();
