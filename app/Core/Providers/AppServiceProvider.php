@@ -5,6 +5,9 @@ namespace App\Core\Providers;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
 
+/**
+ * @codeCoverageIgnore
+ */
 class AppServiceProvider extends ServiceProvider
 {
     /**

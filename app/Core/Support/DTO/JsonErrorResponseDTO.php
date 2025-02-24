@@ -5,6 +5,9 @@ namespace App\Core\Support\DTO;
 use App\Core\Support\AbstractDTO;
 use Throwable;
 
+/**
+ * @codeCoverageIgnore
+ */
 class JsonErrorResponseDTO extends AbstractDTO
 {
     /**

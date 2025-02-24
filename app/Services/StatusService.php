@@ -29,10 +29,6 @@ class StatusService
     {
         $status = $this->statusRepository->allNoTrashed();
 
-        if ($status->isEmpty()) {
-            throw new StatusNotFoundException('Não há status cadastrados', 404);
-        }
-
         return $status;
     }
 }

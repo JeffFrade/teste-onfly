@@ -6,6 +6,9 @@ use App\Models\User;
 use App\Repositories\UserRepository;
 use Laravel\Passport\ClientRepository;
 
+/**
+ * @codeCoverageIgnore
+ */
 class UserObserver
 {
     public function created(User $user)

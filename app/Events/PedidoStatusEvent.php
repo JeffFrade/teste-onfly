@@ -13,27 +13,19 @@ class PedidoStatusEvent
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     private $pedido;
-    private $user;
 
     /**
      * Create a new event instance.
      */
     public function __construct(
-        Pedido $pedido,
-        User $user
+        Pedido $pedido
     )
     {
         $this->pedido = $pedido;
-        $this->user = $user;
     }
 
     public function getPedido()
     {
         return $this->pedido;
-    }
-
-    public function getUser()
-    {
-        return $this->user;
     }
 }
