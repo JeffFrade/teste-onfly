@@ -13,10 +13,12 @@ use Illuminate\Support\Facades\Auth;
 class PedidoService
 {
     private $pedidoRepository;
+    private $statusService;
 
     public function __construct()
     {
         $this->pedidoRepository = new PedidoRepository();
+        $this->statusService = new StatusService();
     }
 
     public function index(array $data)
@@ -44,7 +46,7 @@ class PedidoService
 
         $pedido = $this->pedidoRepository->create($data);
 
-        event(new PedidoStatusEvent($pedido, $user));
+        event(new PedidoStatusEvent($pedido));
 
         return $pedido;
     }
@@ -67,13 +69,17 @@ class PedidoService
         $this->validateStartDate($data['data_ida']);
         $this->validateEndDate($data['data_ida'], $data['data_volta']);
 
+        if (!empty($data['id_status'] ?? '')) {
+            $this->statusService->edit($data['id_status']);
+        }
+
         $this->pedidoRepository->update($data, $id);
 
         if (
             !empty($data['id_status'] ?? '') && 
             ($pedido->id_status != $data['id_status'] ?? '')
         ) {
-            event(new PedidoStatusEvent($pedido, Auth::user()));
+            event(new PedidoStatusEvent($pedido));
         }
 
         return $this->edit($id);

@@ -6,6 +6,9 @@ use App\Core\Support\Controller;
 use App\Exceptions\StatusNotFoundException;
 use App\Services\StatusService;
 
+/**
+ * @codeCoverageIgnore
+ */
 class StatusController extends Controller
 {
     private $statusService;

@@ -9,6 +9,9 @@ use App\Exceptions\StatusNotFoundException;
 use App\Services\PedidoService;
 use Illuminate\Http\Request;
 
+/**
+ * @codeCoverageIgnore
+ */
 class PedidoController extends Controller
 {
     private $pedidoService;

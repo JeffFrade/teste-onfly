@@ -30,7 +30,7 @@ class PedidoStatusListener implements ShouldQueue
             $event->getPedido()
         );
 
-        Mail::to($event->getUser()->email)->queue($mailable);
+        Mail::to($event->getPedido()->user->email)->queue($mailable);
 
         Log::info('Pedido criado | Dados: ' . json_encode($event->getPedido()));
     }
