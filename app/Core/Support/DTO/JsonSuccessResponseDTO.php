@@ -4,6 +4,9 @@ namespace App\Core\Support\DTO;
 
 use App\Core\Support\AbstractDTO;
 
+/**
+ * @codeCoverageIgnore
+ */
 class JsonSuccessResponseDTO extends AbstractDTO
 {
     /**
