@@ -47,9 +47,4 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
-    public function validateForPassportPasswordGrant(string $password)
-    {
-        return true;
-    }
 }
