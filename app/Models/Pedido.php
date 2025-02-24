@@ -24,6 +24,6 @@ class Pedido extends Model
 
     public function status()
     {
-        return $this->hasOne(Pedido::class, 'id', 'id_status');
+        return $this->hasOne(Status::class, 'id', 'id_status');
     }
 }

@@ -11,4 +11,11 @@ class PedidoRepository extends AbstractRepository
     {
         $this->model = new Pedido();
     }
+
+    public function edit(int $id)
+    {
+        return $this->model->with('status')
+            ->where('id', $id)
+            ->first();
+    }
 }

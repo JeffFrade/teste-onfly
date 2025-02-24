@@ -3,7 +3,6 @@
 namespace App\Mail;
 
 use App\Models\Pedido;
-use App\Models\Status;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -15,18 +14,15 @@ class PedidoStatusMail extends Mailable
     use Queueable, SerializesModels;
 
     private $pedido;
-    private $status;
 
     /**
      * Create a new message instance.
      */
     public function __construct(
-        Pedido $pedido,
-        Status $status
+        Pedido $pedido
     )
     {
         $this->pedido = $pedido;
-        $this->status = $status;
     }
 
     /**
@@ -47,8 +43,7 @@ class PedidoStatusMail extends Mailable
         return new Content(
             view: 'mail.pedido_status',
             with: [
-                'pedido' => $this->pedido,
-                'status' => $this->status
+                'pedido' => $this->pedido
             ]
         );
     }

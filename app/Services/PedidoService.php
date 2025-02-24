@@ -37,7 +37,7 @@ class PedidoService
 
     public function edit(int $id)
     {
-        $pedido = $this->pedidoRepository->findFirst('id', $id);
+        $pedido = $this->pedidoRepository->edit($id);
 
         if (empty($pedido) || $pedido->id_user != Auth::user()->id) {
             throw new PedidoNotFoundException('Pedido inexistente.', 404);
