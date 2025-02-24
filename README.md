@@ -14,7 +14,7 @@ O projeto também possui suporte a suíte de testes. (Ver o tópico de testes).
 ### Executar o Projeto
 ---
 
-Para executar o projeto, basta executar o comando `sh config.sh`, pois ele já tem todos os passos necessários para colocar a aplicação de pé, incluindo massa de dados para teste.
+Para executar o projeto, basta executar o comando `sh config.sh`, pois ele já tem todos os passos necessários para colocar a aplicação de pé, incluindo massa de dados para teste. (A aplicação está configurada para rodar em `localhost:8000`).
 
 ### Login na API
 ---
